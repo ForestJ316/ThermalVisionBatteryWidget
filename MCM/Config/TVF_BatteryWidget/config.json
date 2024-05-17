@@ -1,7 +1,7 @@
 {
   "modName": "TVF_BatteryWidget",
-  "displayName": "Thermal Vision Battery Widget",
-  "minMcmVersion": 2,
+  "displayName": "TM Vision Battery Widget",
+  "minMcmVersion": 1,
   "pluginRequirements": ["TVF_BatteryWidget.esp"],
   "content": [
     {
@@ -69,7 +69,7 @@
     },
     {
       "id": "bEmptyBatteryGivesRads:General",
-      "text": "Flashlight Gives Rads",
+      "text": "Flashlight Rads",
       "type": "switcher",
       "help": "Toggle whether running out of battery and not having a spare will give rads while the flashlight remains on.",
       "groupControl": 2,
@@ -78,16 +78,16 @@
       }
     },
     {
-      "id": "iEmptyBatteryRadsAmount:General",
+      "id": "fBatteryRadsAmount:General",
       "text": "Rads Amount",
       "type": "slider",
-      "help": "Adjust the rads per second.",
+      "help": "Rads per second. Default is 10.",
       "groupCondition": 2,
       "valueOptions": {
-        "min": 1,
+        "min": 5,
         "max": 20,
-        "step": 1,
-        "sourceType": "ModSettingInt"
+        "step": 5,
+        "sourceType": "ModSettingFloat"
       }
     },
     { "type": "spacer" }

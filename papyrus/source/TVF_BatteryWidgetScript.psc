@@ -18,15 +18,13 @@ ActorValue Property PipboyLightActive Auto
 Bool bWasSettingChanged = False
 Int iCurrentBatteryState = -1 ; Init -1
 ; Battery Rads
-GlobalVariable Property TVF_BatteryGivesRads Auto
-ActorValue Property RadsAV Auto
-Int iBatteryRadsAmount = 10
+GlobalVariable Property BatteryGivesRads Auto
+GlobalVariable Property BatteryRadsAmount Auto
 
 Event OnQuestInit()
     hud = HUDFramework.GetInstance()
 	Self.RegisterForRemoteEvent(PlayerRef, "OnPlayerLoadGame")
 	Self.RegisterForCustomEvent(TMVisionScript, "BatteryStateEvent")
-	Self.RegisterForCustomEvent(TMVisionScript, "BatteryRadsEvent")
     If (hud)
         hud.RegisterWidget(Self, Battery_Widget, 0, 0, abLoadNow = True, abAutoLoad = True)
     Else
@@ -39,7 +37,6 @@ EndEvent
 
 Event Actor.OnPlayerLoadGame(Actor akSender)
 	Self.RegisterForCustomEvent(TMVisionScript, "BatteryStateEvent")
-	Self.RegisterForCustomEvent(TMVisionScript, "BatteryRadsEvent")
 	Self.RegisterForMenuOpenCloseEvent("PauseMenu")
 	iCurrentBatteryState = -1
 EndEvent
@@ -83,8 +80,8 @@ Function MCMUpdateBatteryWidget()
 	float posY = MCM.GetModSettingFloat(Battery_MCM, "fWidgetPosY:General")
 	hud.SetWidgetPosition(Battery_Widget, posX, posY)
 	; Battery Rads
-	iBatteryRadsAmount = MCM.GetModSettingInt(Battery_MCM, "iEmptyBatteryRadsAmount:General")
-	TVF_BatteryGivesRads.SetValue(MCM.GetModSettingBool(Battery_MCM, "bEmptyBatteryGivesRads:General") as float)
+	BatteryGivesRads.SetValue(MCM.GetModSettingBool(Battery_MCM, "bEmptyBatteryGivesRads:General") as float)
+	BatteryRadsAmount.SetValue(MCM.GetModSettingFloat(Battery_MCM, "fBatteryRadsAmount:General"))
 EndFunction
 
 Event TM_Vision_Script.BatteryStateEvent(TM_Vision_Script akSender, Var[] akArgs)
@@ -168,15 +165,8 @@ Event TM_Vision_Script.BatteryStateEvent(TM_Vision_Script akSender, Var[] akArgs
 	endif
 EndEvent
 
-Event TM_Vision_Script.BatteryRadsEvent(TM_Vision_Script akSender, Var[] akArgs)
-	bool bGiveRads = akArgs[0] as bool
-	if bGiveRads
-		PlayerRef.ModValue(RadsAV, iBatteryRadsAmount)
-	endif
-EndEvent
-
 Function FlashEmptyBattery()
-	if PlayerRef.GetItemCount(Battery as Form) > 0
+	if PlayerRef.GetItemCount(Battery) > 0
 		TMVisionScript.StartTimer(0, 22)
 	else
 		hud.SendMessageString(Battery_Widget, Command_UpdateBattery, "BatteryEmptyAnim")

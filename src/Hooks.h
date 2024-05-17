@@ -19,7 +19,7 @@ public:
 	static void GetForms()
 	{
 		auto dataHandler = RE::TESDataHandler::GetSingleton();
-		BatteryQuestForm = dataHandler->LookupForm<RE::TESQuest>(0x800, "TVF_BatteryWidget.esp");
+		BatteryQuestForm = dataHandler->LookupForm<RE::TESQuest>(0x806, "TVF_BatteryWidget.esp");
 		BatteryCurrentPercent = dataHandler->LookupForm<RE::TESGlobal>(0x801, "TVF_BatteryWidget.esp");
 	}
 

@@ -135,7 +135,6 @@ Bool Property WatchPerformanceEnabled = False Auto
 Actor Property PlayerRef Auto
 CustomEvent BatteryStateEvent
 Bool bRechargedWithDevice = False
-CustomEvent BatteryRadsEvent
 GlobalVariable Property TVF_BatteryGivesRads Auto
 
 ;-- Functions ---------------------------------------
@@ -183,12 +182,6 @@ Function SendBatteryEvent(float akBatHealth, float akMCMBatHealth, bool bIsLoadG
   args[1] = akBatHealth
   args[2] = bIsLoadGame
   SendCustomEvent("BatteryStateEvent", args)
-EndFunction
-
-Function SendBatteryRadsEvent(bool bBatteryGivesRads)
-	Var[] args = new Var[1]
-	args[0] = bBatteryGivesRads
-	SendCustomEvent("BatteryRadsEvent", args)
 EndFunction
 
 Event OnKeyUp(Int keyCode, Float time)
@@ -1233,8 +1226,6 @@ Event OnTimer(Int aiTimerID)
 		  If BatteryGivesRads == 0.0 || LightHealth == 0.0
             player.EquipItem(TM_FlashLight_Off as Form, True, True)
             player.RemoveItem(TM_FlashLight_On as Form, 1, True, None)
-		  ElseIf BatteryGivesRads == 1.0 && LightHealth == 1.0
-		    SendBatteryRadsEvent(true)
 		  EndIf
         EndIf
       EndIf
@@ -1341,8 +1332,6 @@ Event OnTimer(Int aiTimerID)
 		If BatteryGivesRads == 0.0 || LightHealth == 0.0
           player.EquipItem(TM_FlashLight_Off as Form, True, True)
           player.RemoveItem(TM_FlashLight_On as Form, 1, True, None)
-		ElseIf BatteryGivesRads == 1.0 && LightHealth == 1.0
-		  SendBatteryRadsEvent(true)
 		EndIf
 
 		if LightHealth == 1.0
