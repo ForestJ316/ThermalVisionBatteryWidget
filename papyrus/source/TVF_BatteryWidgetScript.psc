@@ -22,22 +22,31 @@ GlobalVariable Property BatteryGivesRads Auto
 GlobalVariable Property BatteryRadsAmount Auto
 
 Event OnQuestInit()
-    hud = HUDFramework.GetInstance()
 	Self.RegisterForRemoteEvent(PlayerRef, "OnPlayerLoadGame")
 	Self.RegisterForCustomEvent(TMVisionScript, "BatteryStateEvent")
-    If (hud)
-        hud.RegisterWidget(Self, Battery_Widget, 0, 0, abLoadNow = True, abAutoLoad = True)
-    Else
-        Debug.MessageBox("HUDFramework is not installed!")
-    EndIf
 	Self.RegisterForMenuOpenCloseEvent("PauseMenu")
 	Self.RegisterForExternalEvent("OnMCMSettingChange|TVF_BatteryWidget", "OnMCMSettingChange")
+	hud = HUDFramework.GetInstance()
+    if hud
+        hud.RegisterWidget(Self, Battery_Widget, 0, 0, abLoadNow = True, abAutoLoad = True)
+    else
+        Debug.MessageBox("HUDFramework is not installed!")
+    endif
 	iCurrentBatteryState = -1
 EndEvent
 
 Event Actor.OnPlayerLoadGame(Actor akSender)
 	Self.RegisterForCustomEvent(TMVisionScript, "BatteryStateEvent")
 	Self.RegisterForMenuOpenCloseEvent("PauseMenu")
+	Self.RegisterForExternalEvent("OnMCMSettingChange|TVF_BatteryWidget", "OnMCMSettingChange")
+	hud = HUDFramework.GetInstance()
+	if hud
+		if !hud.IsWidgetRegistered(Battery_Widget)
+			hud.RegisterWidget(Self, Battery_Widget, 0, 0, abLoadNow = True, abAutoLoad = True)
+		endif
+	else
+		Debug.MessageBox("HUDFramework is not installed!")
+	endif
 	iCurrentBatteryState = -1
 EndEvent
 
@@ -56,9 +65,9 @@ EndEvent
 
 ; This function is called by HUDFramework when the widget is loaded.
 Function HUD_WidgetLoaded(string asWidget)
-    If (asWidget == Battery_Widget)
+    if (asWidget == Battery_Widget)
 		MCMUpdateBatteryWidget()
-    EndIf
+    endif
 EndFunction
 
 Function MCMUpdateBatteryWidget()
