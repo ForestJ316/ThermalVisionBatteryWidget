@@ -42,6 +42,7 @@
 		private static const Status5:String = "Battery5";
 		private static const Status0:String = "Battery0";
 		private static const StatusEmptyAnim:String = "BatteryEmptyAnim";
+		private static const StatusRadsLoop:String = "BatteryRadsLoop";
 				
 		public function Main()
 		{
@@ -122,6 +123,9 @@
 							break;
 						case String(StatusEmptyAnim):
 							this.BatteryMovie.gotoAndPlay(StatusEmptyAnim);
+							break;
+						case String(StatusRadsLoop):
+							this.BatteryMovie.gotoAndPlay(StatusRadsLoop);
 							break;
 					}
 				case String(Command_ScaleBattery):
