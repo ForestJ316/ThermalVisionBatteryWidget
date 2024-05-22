@@ -4,9 +4,9 @@
 	
 	import hudframework.IHUDWidget;
 	
-	public class Main extends MovieClip implements IHUDWidget
+	public class TVF_BatteryMain extends MovieClip implements IHUDWidget
 	{	
-		private static const WIDGET_IDENTIFIER:String = "Battery_Widget.swf";
+		private static const WIDGET_IDENTIFIER:String = "TVF_Battery_Widget.swf";
 		
 		private var OriginalWidth:Number;
 		private var OriginalHeight:Number;
@@ -44,7 +44,7 @@
 		private static const StatusEmptyAnim:String = "BatteryEmptyAnim";
 		private static const StatusRadsLoop:String = "BatteryRadsLoop";
 				
-		public function Main()
+		public function TVF_BatteryMain()
 		{
 			OriginalWidth = this.BatteryMovie.width;
 			OriginalHeight = this.BatteryMovie.height;
