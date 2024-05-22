@@ -1,6 +1,6 @@
 ScriptName TVF_BatteryWidgetScript Extends Quest
 
-String Property Battery_Widget = "Battery_Widget.swf" AutoReadOnly
+String Property Battery_Widget = "TVF_Battery_Widget.swf" AutoReadOnly
 TM_Vision_Script Property TMVisionScript Auto Const Mandatory
 
 String Property Battery_MCM = "TVF_BatteryWidget" AutoReadOnly
